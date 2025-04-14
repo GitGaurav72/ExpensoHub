@@ -1,0 +1,48 @@
+<mat-toolbar class="navbar">
+  <div class="brand">
+    <span class="logo">AZ</span>
+    <span class="divider"></span>
+  </div>
+
+  <div class="nav-links">
+    <a mat-button routerLink="/company/dashboard" routerLinkActive="active">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </a>
+    
+    <a mat-button routerLink="/company/employees" routerLinkActive="active">
+      <mat-icon>groups</mat-icon>
+      <span>Employees</span>
+    </a>
+    
+    <a mat-button routerLink="/company/records" routerLinkActive="active">
+      <mat-icon>receipt_long</mat-icon>
+      <span>Records</span>
+    </a>
+  </div>
+
+  <div class="profile-section">
+    <button mat-button [matMenuTriggerFor]="profileMenu" class="profile-button">
+      <div class="profile-info">
+        <span class="company-name">{{ companyName }}</span>
+        <mat-icon>arrow_drop_down</mat-icon>
+      </div>
+    </button>
+
+    <mat-menu #profileMenu="matMenu" class="profile-menu">
+      <button mat-menu-item routerLink="/company/profile">
+        <mat-icon>business</mat-icon>
+        <span>Company Profile</span>
+      </button>
+      <button mat-menu-item routerLink="/company/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

@@ -1,0 +1,143 @@
+<app-navbar></app-navbar>
+
+<div class="settings-container">
+  <h1>Company Settings</h1>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="saveSettings()">
+    <!-- Reimbursement Rules -->
+    <mat-card class="settings-card">
+      <mat-card-header>
+        <mat-card-title>Reimbursement Rules</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div formArrayName="reimbursementRules">
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let rule of reimbursementRules.controls; let i=index" [formGroupName]="i">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{rule.get('type')?.value || 'New Rule'}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  Max Amount: ${{rule.get('maxAmount')?.value || 0}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="rule-form">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option *ngFor="let type of reimbursementTypes" [value]="type">
+                      {{type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Max Amount ($)</mat-label>
+                  <input matInput type="number" formControlName="maxAmount">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Allowed Departments</mat-label>
+                  <mat-select formControlName="allowedDepartments" multiple>
+                    <mat-option *ngFor="let dept of departments.controls" [value]="dept.get('name')?.value">
+                      {{dept.get('name')?.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Allowed Designations</mat-label>
+                  <mat-select formControlName="allowedDesignations" multiple>
+                    <mat-option *ngFor="let desig of designations.controls" [value]="desig.get('title')?.value">
+                      {{desig.get('title')?.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>Description</mat-label>
+                  <textarea matInput formControlName="description" rows="3"></textarea>
+                </mat-form-field>
+
+                <mat-slide-toggle formControlName="requiresReceipt">
+                  Requires Receipt
+                </mat-slide-toggle>
+
+                <mat-slide-toggle formControlName="active">
+                  Active
+                </mat-slide-toggle>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+
+          <button mat-raised-button color="primary" type="button" (click)="addReimbursementRule()">
+            <mat-icon>add</mat-icon>
+            Add Rule
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Approval Workflow -->
+    <mat-card class="settings-card" formGroupName="approvalWorkflow">
+      <mat-card-header>
+        <mat-card-title>Approval Workflow</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="workflow-settings">
+          <mat-slide-toggle formControlName="requireManagerApproval">
+            Require Manager Approval
+          </mat-slide-toggle>
+
+          <mat-slide-toggle formControlName="requireHRApproval">
+            Require HR Approval
+          </mat-slide-toggle>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Auto-approval Limit ($)</mat-label>
+            <input matInput type="number" formControlName="autoApprovalLimit">
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Departments -->
+    <mat-card class="settings-card">
+      <mat-card-header>
+        <mat-card-title>Departments</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div formArrayName="departments">
+          <div *ngFor="let dept of departments.controls; let i=index" [formGroupName]="i" class="department-form">
+            <mat-form-field appearance="outline">
+              <mat-label>Department Name</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Monthly Budget ($)</mat-label>
+              <input matInput type="number" formControlName="budget">
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="active">
+              Active
+            </mat-slide-toggle>
+          </div>
+
+          <button mat-raised-button color="primary" type="button" (click)="addDepartment()">
+            <mat-icon>add</mat-icon>
+            Add Department
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Save Button -->
+    <div class="save-section">
+      <button mat-raised-button color="primary" type="submit">
+        Save Settings
+      </button>
+    </div>
+  </form>
+</div>

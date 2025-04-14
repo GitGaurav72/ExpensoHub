@@ -1,0 +1,86 @@
+<app-navbar></app-navbar>
+
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>Company Profile</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="logo-section">
+        <div class="logo-container">
+          <img [src]="logoPreview || 'assets/images/default-company-logo.png'" alt="Company Logo">
+          <button mat-mini-fab class="edit-logo-btn" (click)="logoInput.click()">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <input #logoInput type="file" hidden (change)="onLogoChange($event)" accept="image/*">
+        </div>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="companyName">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Business Type</mat-label>
+            <mat-select formControlName="businessType">
+              <mat-option *ngFor="let type of businessTypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Registration Number</mat-label>
+            <input matInput formControlName="registrationNumber">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tax ID</mat-label>
+            <input matInput formControlName="taxId">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <textarea matInput formControlName="address" rows="2"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>ZIP Code</mat-label>
+            <input matInput formControlName="zipCode">
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button type="button" color="basic">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

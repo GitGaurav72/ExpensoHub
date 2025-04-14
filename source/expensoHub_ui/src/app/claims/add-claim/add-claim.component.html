@@ -1,0 +1,130 @@
+<div class="add-claim-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Submit New Claim</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="claim-mode-toggle">
+        <mat-button-toggle-group [value]="claimMode" (change)="onModeChange($event.value)">
+          <mat-button-toggle value="single">Single Day Claim</mat-button-toggle>
+          <mat-button-toggle value="monthly">Monthly Claim</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+
+      <div class="claim-content" [class.monthly-mode]="claimMode === 'monthly'">
+        <div class="calendar-section" *ngIf="claimMode === 'monthly'">
+          <mat-card>
+            <mat-calendar 
+              [(selected)]="selectedDate"
+              (selectedChange)="onDateSelect($event)"
+              [dateFilter]="dateFilter">
+            </mat-calendar>
+          </mat-card>
+          <div class="calendar-legend">
+            <div class="legend-item">
+              <mat-icon class="submitted-icon">check_circle</mat-icon>
+              <span>Claim Submitted</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section" [class.with-calendar]="claimMode === 'monthly'">
+          <form [formGroup]="claimForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Claim Type</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let type of claimTypes" [value]="type">
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="claimForm.get('type')?.hasError('required')">
+                  Claim type is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" formControlName="amount">
+                <mat-error *ngIf="claimForm.get('amount')?.hasError('required')">
+                  Amount is required
+                </mat-error>
+                <mat-error *ngIf="claimForm.get('amount')?.hasError('min')">
+                  Amount must be greater than 0
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="3"></textarea>
+                <mat-error *ngIf="claimForm.get('description')?.hasError('required')">
+                  Description is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Upload Receipts</mat-label>
+                <input matInput [value]="getFileNames()" readonly placeholder="No files selected">
+                <button type="button" mat-icon-button matSuffix (click)="$event.preventDefault(); fileInput.click()">
+                  <mat-icon>attach_file</mat-icon>
+                </button>
+              </mat-form-field>
+              <input #fileInput type="file" 
+                     [multiple]="true" 
+                     accept=".pdf,.jpg,.jpeg,.png"
+                     (change)="onFileSelected($event)" 
+                     style="display: none">
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Additional Notes</mat-label>
+                <textarea matInput formControlName="additionalNotes" rows="2"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="form-actions">
+              <button mat-button type="button" (click)="onCancel()">Cancel</button>
+              <button mat-raised-button color="primary" type="submit" 
+                      [disabled]="!claimForm.valid || (claimMode === 'monthly' && !selectedDate)">
+                Submit Claim
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- Add this section after the form -->
+        <div class="submitted-claims" *ngIf="submittedClaims.length > 0">
+          <h3>Submitted Claims</h3>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let claim of submittedClaims">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{claim.date | date:'mediumDate'}} - {{claim.type}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  Amount: {{claim.amount | currency}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="claim-details">
+                <p><strong>Description:</strong> {{claim.description}}</p>
+                <p *ngIf="claim.additionalNotes">
+                  <strong>Additional Notes:</strong> {{claim.additionalNotes}}
+                </p>
+                <p *ngIf="claim.files.length">
+                  <strong>Attached Files:</strong> {{claim.files.join(', ')}}
+                </p>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

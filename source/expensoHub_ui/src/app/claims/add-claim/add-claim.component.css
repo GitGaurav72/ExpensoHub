@@ -1,0 +1,95 @@
+.add-claim-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.claim-mode-toggle {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.claim-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.calendar-section {
+  display: none;
+}
+
+.monthly-mode .calendar-section {
+  display: block;
+  flex: 0 0 320px;
+}
+
+.form-section {
+  flex: 1;
+}
+
+.form-section.with-calendar {
+  max-width: 600px;
+}
+
+.form-row {
+  position: relative;
+}
+
+input[readonly] {
+  cursor: default;
+}
+
+.form-row {
+  margin-bottom: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.calendar-legend {
+  margin-top: 1rem;
+  padding: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.submitted-icon {
+  color: #4CAF50;
+}
+
+.mat-calendar-body-cell.submitted::after {
+  content: '✓';
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #4CAF50;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .claim-content {
+    flex-direction: column;
+  }
+
+  .monthly-mode .calendar-section {
+    flex: none;
+    margin-bottom: 2rem;
+  }
+
+  .form-section.with-calendar {
+    max-width: none;
+  }
+}

@@ -1,0 +1,177 @@
+<div class="dashboard-container">
+  <!-- Add this button at the top of the dashboard -->
+  <div class="action-bar">
+    <button mat-raised-button color="primary" class="add-claim-btn" (click)="addNewClaim()">
+      <mat-icon>add</mat-icon>
+      New Claim
+    </button>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <mat-card class="summary-card" *ngFor="let card of summaryCards">
+      <mat-card-content>
+        <div class="card-icon">
+          <mat-icon>{{card.icon}}</mat-icon>
+        </div>
+        <div class="card-details">
+          <h3>{{card.title}}</h3>
+          <div class="value-trend">
+            <span class="value">{{card.value}}</span>
+            <span class="trend" [class.positive]="card.trend.includes('+')">{{card.trend}}</span>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Budget Overview -->
+  <div class="dashboard-row">
+    <mat-card class="budget-card">
+      <mat-card-header>
+        <mat-card-title>Monthly Budget Overview</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="budget-info">
+          <div class="budget-details">
+            <div>
+              <span class="label">Total Budget:</span>
+              <span class="value">${{monthlyBudget.total}}</span>
+            </div>
+            <div>
+              <span class="label">Used:</span>
+              <span class="value">${{monthlyBudget.used}}</span>
+            </div>
+            <div>
+              <span class="label">Remaining:</span>
+              <span class="value">${{monthlyBudget.remaining}}</span>
+            </div>
+          </div>
+          <mat-progress-bar mode="determinate" 
+            [value]="(monthlyBudget.used / monthlyBudget.total) * 100">
+          </mat-progress-bar>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Recent Claims Table -->
+  <div class="dashboard-row">
+    <mat-card class="claims-card">
+      <mat-card-header>
+        <mat-card-title>Recent Claims</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table mat-table [dataSource]="recentClaims">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let claim">{{claim.id}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let claim">{{claim.date | date}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let claim">{{claim.type}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let claim">${{claim.amount}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let claim">
+              <span class="status-badge" [class]="claim.status.toLowerCase()">
+                {{claim.status}}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let claim">
+              <button mat-icon-button color="primary">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Add after your recent claims table -->
+  <div class="dashboard-row">
+    <mat-card class="historical-claims-card">
+      <mat-card-header>
+        <mat-card-title>Historical Claims</mat-card-title>
+        <div class="year-selector">
+          <mat-form-field>
+            <mat-label>Select Year</mat-label>
+            <mat-select [(ngModel)]="selectedYear" (selectionChange)="onYearChange($event.value)">
+              <mat-option *ngFor="let year of availableYears" [value]="year">
+                {{year}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let monthData of monthlyClaimsList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{monthData.month}}
+              </mat-panel-title>
+              <mat-panel-description>
+                Total: ${{monthData.totalAmount}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <table mat-table [dataSource]="monthData.claims">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>ID</th>
+                <td mat-cell *matCellDef="let claim">{{claim.id}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let claim">{{claim.date | date}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef>Type</th>
+                <td mat-cell *matCellDef="let claim">{{claim.type}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef>Amount</th>
+                <td mat-cell *matCellDef="let claim">${{claim.amount}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let claim">
+                  <span class="status-badge" [class]="claim.status.toLowerCase()">
+                    {{claim.status}}
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedMonthlyColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedMonthlyColumns;"></tr>
+            </table>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

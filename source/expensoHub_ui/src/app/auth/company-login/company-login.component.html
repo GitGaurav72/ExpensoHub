@@ -1,0 +1,57 @@
+<div class="company-login-container">
+  <div class="login-content">
+    <div class="login-illustration">
+      <img src="assets/images/company-login.svg" alt="Company Login">
+    </div>
+    <div class="login-form-container">
+      <div class="brand">
+        <div class="logo">AZ</div>
+        <h1>Company Portal</h1>
+      </div>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Company ID</mat-label>
+          <input matInput formControlName="companyId" placeholder="Enter company ID">
+          <mat-error *ngIf="loginForm.get('companyId')?.hasError('required')">
+            Company ID is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Enter company email">
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Please enter a valid email
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Enter password">
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">
+            Login
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </form>
+
+      <div class="register-link">
+        <p>Don't have a company account?</p>
+        <button mat-button (click)="goToRegister()">
+          Sign Up Now
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

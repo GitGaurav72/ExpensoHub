@@ -1,0 +1,103 @@
+<div class="company-register-container">
+  <div class="register-content">
+    <div class="register-illustration">
+      <img src="assets/images/company-register.svg" alt="Company Registration">
+    </div>
+    <div class="register-form-container">
+      <div class="brand">
+        <div class="logo">AZ</div>
+        <h1>Company Registration</h1>
+      </div>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>Company Name</mat-label>
+            <input matInput formControlName="companyName">
+            <mat-error *ngIf="registerForm.get('companyName')?.hasError('required')">
+              Company name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Business Type</mat-label>
+            <mat-select formControlName="businessType">
+              <mat-option *ngFor="let type of businessTypes" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Registration Number</mat-label>
+            <input matInput formControlName="registrationNumber">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tax ID</mat-label>
+            <input matInput formControlName="taxId">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone">
+            <mat-error *ngIf="registerForm.get('phone')?.hasError('pattern')">
+              Please enter a valid 10-digit number
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <textarea matInput formControlName="address" rows="2"></textarea>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>ZIP Code</mat-label>
+            <input matInput formControlName="zipCode">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+              Password must be at least 8 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error *ngIf="registerForm.hasError('mismatch')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">
+            Register Company
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

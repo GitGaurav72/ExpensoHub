@@ -1,0 +1,146 @@
+// Add these styles at the top of your dashboard component scss
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  flex: 1;
+  padding: 2rem;
+  background: #f8f9fa;
+  margin-top: 70px; // Height of navbar
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    margin: 0;
+  }
+
+  .header-actions {
+    button {
+      background: linear-gradient(135deg, #f8e71c 0%, #ffd43b 100%);
+      color: #333;
+      border-radius: 12px;
+      padding: 0 1.5rem;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}
+
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .stat-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    background: white;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    mat-icon {
+      font-size: 2.5rem;
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: 1rem;
+      color: #f8e71c;
+    }
+
+    .stat-content {
+      h3 {
+        margin: 0;
+        color: #666;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+      }
+    }
+  }
+}
+
+.requests-section {
+  border-radius: 16px;
+  overflow: hidden;
+
+  .mat-mdc-tab-group {
+    background: white;
+  }
+
+  .requests-table {
+    width: 100%;
+    
+    th {
+      background: #f8f9fa;
+      color: #333;
+      font-weight: 500;
+    }
+
+    td {
+      color: #666;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    .mat-mdc-row {
+      transition: background-color 0.3s ease;
+    }
+  }
+}
+
+.mat-column-actions {
+  width: 120px;
+  text-align: right;
+}
+
+mat-chip {
+  &.mat-primary {
+    background: #4CAF50 !important;
+    color: white !important;
+  }
+
+  &.mat-warn {
+    background: #ff9800 !important;
+    color: white !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .statistics-grid {
+    grid-template-columns: 1fr;
+  }
+}

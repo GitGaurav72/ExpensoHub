@@ -1,0 +1,77 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>Add New Employee</h2>
+  
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content class="form-content">
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Employee ID</mat-label>
+          <input matInput formControlName="emp_id">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="emp_Firtnm">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="emp_Lstnm">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="emp_mail">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Company ID</mat-label>
+          <input matInput formControlName="emp_compId">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="emp_dept">
+            <mat-option *ngFor="let dept of departments" [value]="dept">
+              {{dept}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Update the designations access in the template -->
+        <mat-form-field appearance="outline">
+          <mat-label>Designation</mat-label>
+          <mat-select formControlName="emp_design">
+            <mat-option *ngFor="let design of getDesignations()" [value]="design">
+              {{design}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="emp_PhNo">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Join Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="emp_joinDt">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Address</mat-label>
+          <textarea matInput rows="3" formControlName="emp_address"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-button type="button" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.valid">
+        Add Employee
+      </button>
+    </div>
+  </form>
+</div>

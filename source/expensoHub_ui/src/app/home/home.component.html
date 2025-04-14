@@ -1,0 +1,72 @@
+<div class="home-container">
+  <nav class="login-nav">
+    <button mat-button class="user-login" (click)="loginAsUser()">User Login</button>
+    <button mat-button class="company-login" (click)="loginAsCompany()">Company Login</button>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Simplify Employee Reimbursement Management</h1>
+      <p>Streamline your company's reimbursement process with our automated solution</p>
+      <button mat-raised-button color="primary" [routerLink]="['/dashboard']">Start Free Trial</button>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <h2>Why Choose Our Platform?</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <mat-icon>speed</mat-icon>
+        <h3>Fast Processing</h3>
+        <p>Quick approval and verification of reimbursement requests</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>analytics</mat-icon>
+        <h3>Detailed Analytics</h3>
+        <p>Track and analyze reimbursement patterns and expenses</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>integration_instructions</mat-icon>
+        <h3>Payroll Integration</h3>
+        <p>Seamless integration with your existing payroll system</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>security</mat-icon>
+        <h3>Secure Platform</h3>
+        <p>Enterprise-grade security for your sensitive data</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing">
+    <h2 style="text-align: center;">Subscription Plans</h2>
+    <div class="plan-grid">
+      <mat-card *ngFor="let plan of subscriptionPlans" class="plan-card">
+        <mat-card-header>
+          <mat-card-title>{{plan.name}}</mat-card-title>
+          <mat-card-subtitle>${{plan.price}}/month</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <ul>
+            <li *ngFor="let feature of plan.features">{{feature}}</li>
+          </ul>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">Subscribe Now</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta">
+    <h2>Ready to Transform Your Reimbursement Process?</h2>
+    <p>Join thousands of companies already using our platform</p>
+    <button mat-raised-button color="primary" (click)="gotocompanyDashBoart()">Get Started</button>
+  </section>
+</div>
+
+<app-footer></app-footer>

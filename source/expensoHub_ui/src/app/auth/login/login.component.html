@@ -1,0 +1,39 @@
+<div class="login-container">
+    <div class="login-content">
+      <div class="login-illustration">
+        <img src="assets/images/organizo-mascot.svg" alt="Organizo Mascot">
+      </div>
+      <div class="login-form-container">
+        <div class="brand">
+          <div class="logo">AZ</div>
+          <h1>Organizo</h1>
+        </div>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Your email">
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" placeholder="Your password">
+            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+  
+          <button mat-flat-button color="primary" type="submit" [disabled]="!loginForm.valid">
+            Continue
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
