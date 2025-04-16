@@ -1,0 +1,60 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Angular
+dist/
+.tmp/
+.angular/
+.cache/
+aot/
+
+# IDE and Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.swm
+*.sublime-workspace
+*.sublime-project
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing
+coverage/
+junit.xml
+test-report.xml
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build files
+*.js.map
+*.d.ts
+*.ngsummary.json
+*.ngfactory.ts
+
+# Misc
+*.log
+*.pid
+.sass-cache/
+/connect.lock
+/typings
+yarn.lock
+package-lock.json
+*.tgz
+
+# System Files
+.DS_Store
+Thumbs.db
